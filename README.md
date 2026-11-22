@@ -1,4 +1,4 @@
-# ZUTAI LAB · 组态工坊
+# Howe 的三维工厂 · ZUTAI LAB
 
 把水厂、电站和城市，做成人人看得懂的三维世界。作品集静态站，GitHub Pages 直接托管。
 
