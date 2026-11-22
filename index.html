@@ -48,6 +48,7 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .hero { padding-block: 36px 28px; display: grid; gap: 14px }
 .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--flow) }
 h1 { font-family: var(--f-display); font-weight: 900; font-size: clamp(30px, 5.4vw, 56px); line-height: 1.18; margin: 0; text-wrap: balance; letter-spacing: -.01em }
+.nb { display: inline-block }
 h1 em { font-style: normal; color: var(--blue) }
 .lede { max-width: 40em; color: var(--muted); font-size: 17px; margin: 0 }
 .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); margin-top: 6px }
@@ -133,7 +134,7 @@ img, video { max-width: 100% }
 
 <div class="hero">
   <div class="eyebrow">Industrial worlds, made readable</div>
-  <h1>把水厂、电站和城市，做成<em>人人看得懂</em>的三维世界</h1>
+  <h1><span class="nb">把水厂、电站和城市，</span><span class="nb">做成<em>人人看得懂</em>的三维世界</span></h1>
   <p class="lede">你每天都在用水、用电、过立交，却很少有人见过它们里面是什么样。这里的每一部片子，都是我一个人从建模、仿真、运镜到配乐一路做出来的，在浏览器里实时运行，录成一镜到底的片子。</p>
   <div class="stats">
     <span><b>8</b>部作品</span>
