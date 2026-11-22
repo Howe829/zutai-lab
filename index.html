@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZUTAI LAB · 组态工坊</title>
+<meta name="description" content="把水厂、电站和城市，做成人人看得懂的三维世界。ZUTAI LAB 的三维作品集。">
+<meta property="og:title" content="ZUTAI LAB · 组态工坊">
+<meta property="og:description" content="把水厂、电站和城市，做成人人看得懂的三维世界。">
+<meta property="og:image" content="https://howe829.github.io/zutai-lab/og.jpg">
+<meta name="theme-color" content="#08101f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+/* 版式：一条“流程线”从页首贯穿到页尾，作品像管线上的工位依次挂在线上；首屏 2×2 动图直接回答“做什么” */
+:root {
+  --bg: #eef2f7;          /* 白模沙盘的浅灰蓝底 */
+  --panel: #ffffff;
+  --ink: #0f1d33;
+  --muted: #56657c;
+  --line: #d3dce8;
+  --blue: #1d6ee6;        /* 系列图表主色 */
+  --flow: #e8792b;        /* 跟拍对象（一滴水、热量包）的暖色 */
+  --f-display: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --f-body: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #08101f; --panel: #0f1a2e; --ink: #e6edf7; --muted: #8b9ab3; --line: #1f2d47;
+  --blue: #3a8ff0; --flow: #e0731f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #08101f; --panel: #0f1a2e; --ink: #e6edf7; --muted: #8b9ab3; --line: #1f2d47;
+  --blue: #3a8ff0; --flow: #e0731f; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px }
+.wrap { max-width: 1120px; margin: 0 auto }
+a { color: var(--blue) }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; flex-wrap: wrap }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .04em }
+.brand svg { width: 30px; height: 30px }
+.brand small { color: var(--muted); font-weight: 500; letter-spacing: 0 }
+.where { font-family: var(--f-mono); font-size: 13px; color: var(--muted) }
+
+.hero { padding-block: 36px 28px; display: grid; gap: 14px }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--flow) }
+h1 { font-family: var(--f-display); font-weight: 900; font-size: clamp(30px, 5.4vw, 56px); line-height: 1.18; margin: 0; text-wrap: balance; letter-spacing: -.01em }
+h1 em { font-style: normal; color: var(--blue) }
+.lede { max-width: 40em; color: var(--muted); font-size: 17px; margin: 0 }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 28px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); margin-top: 6px }
+.stats b { color: var(--ink); font-size: 20px; font-weight: 600; margin-right: 6px; font-variant-numeric: tabular-nums }
+
+/* 首屏四宫格 */
+.quad { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px }
+.tile { margin: 0; min-width: 0 }
+.tile .v { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 6px; overflow: hidden; background: #0b1526 }
+.tile video, .tile img { display: block; width: 100%; height: 100%; object-fit: cover }
+.tile figcaption { padding: 8px 2px 0; font-size: 14px; color: var(--muted); line-height: 1.55 }
+.tile figcaption b { color: var(--ink); font-weight: 700; margin-right: 6px }
+
+section { padding-block: 56px 8px }
+h2 { font-family: var(--f-display); font-weight: 900; font-size: clamp(22px, 3vw, 30px); margin: 0 0 6px; text-wrap: balance }
+.sub { color: var(--muted); margin: 0 0 26px; max-width: 42em }
+
+/* 三条立场：左边是观众的痛点，右边是做法 */
+.stance { display: grid; gap: 0; border-top: 1px solid var(--line) }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1.3fr); gap: 16px; align-items: start; padding-block: 18px; border-bottom: 1px solid var(--line) }
+.row .no { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--flow); text-decoration-thickness: 2px }
+.row .arrow { color: var(--flow); font-family: var(--f-mono); text-align: center }
+.row .yes b { display: block; font-size: 18px }
+.row .yes span { color: var(--muted); font-size: 15px }
+
+/* 作品：挂在一条流程线上的工位 */
+.line { position: relative; display: grid; gap: 36px; padding-left: 34px }
+.line::before { content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 3px; border-radius: 2px;
+  background: linear-gradient(var(--blue), var(--flow)) }
+.work { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; align-items: center }
+.work::before { content: ""; position: absolute; left: -32px; top: 22px; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); border: 3px solid var(--blue) }
+.work .v { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 6px; overflow: hidden; background: #0b1526 }
+.work video, .work img { display: block; width: 100%; height: 100%; object-fit: cover }
+.work h3 { margin: 0 0 4px; font-size: 21px; font-weight: 900; text-wrap: balance }
+.work .kind { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; color: var(--flow); margin-bottom: 8px }
+.work p { margin: 0 0 12px; color: var(--muted) }
+.spec { display: flex; flex-wrap: wrap; gap: 6px }
+.spec span { font-family: var(--f-mono); font-size: 12px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); font-variant-numeric: tabular-nums }
+
+/* 方法名词表 */
+.terms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+.term { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; min-width: 0 }
+.term b { display: block; font-size: 18px; margin-bottom: 4px }
+.term b::before { content: "「"; color: var(--flow) } .term b::after { content: "」"; color: var(--flow) }
+.term span { color: var(--muted); font-size: 15px }
+
+/* 给企业 */
+.offer { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 26px clamp(18px, 3vw, 34px); display: grid; gap: 18px }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px }
+.three div { min-width: 0 }
+.three b { display: block; font-size: 17px }
+.three span { color: var(--muted); font-size: 15px }
+.contact { font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px }
+.contact b { color: var(--ink) }
+
+footer { margin-top: 48px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px }
+
+@media (max-width: 760px) {
+  .quad, .terms, .three { grid-template-columns: minmax(0, 1fr) }
+  .work { grid-template-columns: minmax(0, 1fr); gap: 12px }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 4px }
+  .row .arrow { text-align: left }
+  .line { padding-left: 24px } .line::before { left: 4px } .work::before { left: -25px }
+}
+
+html { -webkit-text-size-adjust: 100% }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px) }
+body { margin: 0 }
+img, video { max-width: 100% }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="zt-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fe0ff"/><stop offset="1" stop-color="#2f9bf7"/></linearGradient><linearGradient id="zt-left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f86f6"/><stop offset="1" stop-color="#1557c9"/></linearGradient><linearGradient id="zt-right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a4fb0"/><stop offset="1" stop-color="#0c2f78"/></linearGradient></defs><polygon points="32,6 54,18.7 32,31.4 10,18.7" fill="url(#zt-top)"/><polygon points="8.5,21.3 30.5,34 30.5,59 8.5,46.3" fill="url(#zt-left)"/><polygon points="33.5,34 55.5,21.3 55.5,46.3 33.5,59" fill="url(#zt-right)"/><path d="M13 30.5 L13 40.2 L28.4 49.1" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M35.6 49.1 L50.5 40.5" fill="none" stroke="#5fe0ff" stroke-width="3.2" stroke-linecap="round"/><path d="M45.8 38.6 L51.6 39.7 L49.4 45.1" fill="none" stroke="#5fe0ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="32" cy="18.7" rx="6.4" ry="3.7" fill="none" stroke="#ffffff" stroke-width="2.4"/><ellipse cx="32" cy="18.7" rx="2.2" ry="1.3" fill="#ffffff"/></svg>
+    ZUTAI LAB <small>· 组态工坊</small>
+  </div>
+  <div class="where">小红书 · 视频号 · 抖音</div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Industrial worlds, made readable</div>
+  <h1>把水厂、电站和城市，做成<em>人人看得懂</em>的三维世界</h1>
+  <p class="lede">你每天都在用水、用电、过立交，却很少有人见过它们里面是什么样。这里的每一部片子，都是我一个人从建模、仿真、运镜到配乐一路做出来的，在浏览器里实时运行，录成一镜到底的片子。</p>
+  <div class="stats">
+    <span><b>8</b>部作品</span>
+    <span><b>60</b>fps 逐帧录制</span>
+    <span><b>2–3</b>分钟一部</span>
+    <span><b>0</b>素材库模型</span>
+  </div>
+  <div class="quad">
+    <figure class="tile"><div class="v"><video muted loop playsinline preload="none" poster="media/water.jpg" data-src="media/water.mp4"></video></div>
+      <figcaption><b>澜江水厂</b>跟着一滴江水，穿过絮凝、沉淀、过滤，两小时后流进你家水龙头。</figcaption></figure>
+    <figure class="tile"><div class="v"><video muted loop playsinline preload="none" poster="media/ess.jpg" data-src="media/ess.mp4"></video></div>
+      <figcaption><b>云港澜湾储能电站</b>打开一个电池舱，找到正在发热的那一个模组。</figcaption></figure>
+    <figure class="tile"><div class="v"><video muted loop playsinline preload="none" poster="media/campus.jpg" data-src="media/campus.mp4"></video></div>
+      <figcaption><b>云港智算中心</b>机楼一层层拉开，告警从园区一路下钻到第 5 排机柜。</figcaption></figure>
+    <figure class="tile"><div class="v"><video muted loop playsinline preload="none" poster="media/ix.jpg" data-src="media/ix.mp4"></video></div>
+      <figcaption><b>星环立交</b>五层立交、上万辆车，入夜后整座城的楼面一起亮起来。</figcaption></figure>
+  </div>
+</div>
+
+<section>
+  <h2>我想改掉的三件事</h2>
+  <p class="sub">工业本来很好看，只是讲的方式让人看不下去。</p>
+  <div class="stance">
+    <div class="row"><div class="no">看完宣传片，还是不知道厂里发生了什么</div><div class="arrow">→</div>
+      <div class="yes"><b>跟着一个东西走完全程</b><span>一滴水、一份热量、一颗电芯。镜头只跟着它，观众就知道每台设备是干什么的。</span></div></div>
+    <div class="row"><div class="no">工业离普通人太远</div><div class="arrow">→</div>
+      <div class="yes"><b>把数字换成看得见的画面</b><span>不说“200 MWh”，说“相当于近 2 万户人家的灯”，再让远处的城市一栋栋亮起来。</span></div></div>
+    <div class="row"><div class="no">三维制作又贵又慢，改一次等几周</div><div class="arrow">→</div>
+      <div class="yes"><b>模型、动画、配乐全部由代码生成</b><span>一个场景几天成形，改一个镜头几个小时，任意一秒都能单独重录。</span></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>作品</h2>
+  <p class="sub">所有站点都是虚构的，工艺和设备按真实系统做。画面里的数字来自页面里实时运行的仿真，不是贴上去的。</p>
+  <div class="line">
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/water.jpg" data-src="media/water.mp4"></video></div>
+      <div><div class="kind">智慧水务 · 科普</div><h3>澜江水厂 · 一滴水的旅程</h3>
+        <p>10 万吨 / 天的水厂，从江边取水口到出厂泵房。暴雨让原水变浑、滤池自动反冲洗、清晨城市醒来用水量猛增，全在实时仿真里发生。</p>
+        <div class="spec"><span>2:39</span><span>8 个工位跟拍</span><span>白天 / 科技双主题</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/ess.jpg" data-src="media/ess.mp4"></video></div>
+      <div><div class="kind">新能源 · 储能</div><h3>云港澜湾储能电站</h3>
+        <p>100 MW / 200 MWh，白模沙盘画风。正午存下光伏，傍晚送进城；一颗电芯过热时，系统在 3 秒里发现并隔离它。</p>
+        <div class="spec"><span>2:52</span><span>40 个电池舱</span><span>热成像 · 打开电池舱</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/campus.jpg" data-src="media/campus.mp4"></video></div>
+      <div><div class="kind">数据中心 · 园区</div><h3>云港智算中心 · 园区全景</h3>
+        <p>变电站、柴发场、冷站、4 层机楼。市电中断时 UPS 顶上、柴发启动再切回；一架第一视角的无人机低空穿过整个园区。</p>
+        <div class="spec"><span>2:29</span><span>楼层展开</span><span>告警下钻</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/heatnet.jpg" data-src="media/heatnet.mp4"></video></div>
+      <div><div class="kind">智慧供热 · 全网</div><h3>供热全网总览</h3>
+        <p>一座热电厂、12 座换热站。室温云图里离热源近的楼偏热、远的偏冷，一键水力平衡后全城收拢到 20–21 ℃；寒潮来了，调峰热源点火。</p>
+        <div class="spec"><span>2:10</span><span>水力平衡</span><span>管网泄漏处置</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/ix.jpg" data-src="media/ix.mp4"></video></div>
+      <div><div class="kind">智慧交通</div><h3>星环立交 · 交通指挥中心</h3>
+        <p>五层立交、每辆车按跟车模型自己开。演示追尾事故处置、晚高峰诱导、救护车一路绿灯，最后是 38 秒的全城灯光秀。</p>
+        <div class="spec"><span>2:50</span><span>AI 视频识别</span><span>应急绿波</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/heat.jpg" data-src="media/heat.mp4"></video></div>
+      <div><div class="kind">智慧供热 · 换热站</div><h3>换热站监控</h3>
+        <p>系列第一期。一座换热站机房的完整工艺：气候补偿、变频循环、定压补水，板式换热器可以一片片拆开看。</p>
+        <div class="spec"><span>1:24</span><span>设备拆解</span><span>故障光柱</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/harbor.jpg" data-src="media/harbor.mp4"></video></div>
+      <div><div class="kind">光影演出</div><h3>未来科技港 · 春江花月夜</h3>
+        <p>一整条江岸天际线变成水墨长卷，诗句按真实笔顺一笔一笔写上楼面；2400 架无人机画出一笔圆月，配乐是原创的五声旋律。</p>
+        <div class="spec"><span>2:42</span><span>2400 架无人机</span><span>水墨 · 书法 · 焰火</span></div></div></article>
+
+    <article class="work"><div class="v"><video muted loop playsinline preload="none" poster="media/moon.jpg" data-src="media/moon.mp4"></video></div>
+      <div><div class="kind">航天 · 致敬</div><h3>飞向月球</h3>
+        <p>按载人绕月任务公布的真实时间线：发射、地月转移、地出、日食、再入、溅落。月面用公开的真实地形数据，地球的明暗按当天的太阳位置算。</p>
+        <div class="spec"><span>2:48</span><span>27 个机位</span><span>按配乐小节剪辑</span></div></div></article>
+  </div>
+</section>
+
+<section>
+  <h2>几个反复用的做法</h2>
+  <p class="sub">每一期都换行业，但这几条不变。</p>
+  <div class="terms">
+    <div class="term"><b>一滴水的旅程</b><span>选一个东西从头跟到尾。镜头跟拍，底部一行字幕说它现在在哪、已经走了多久。</span></div>
+    <div class="term"><b>白模沙盘</b><span>白色设备、蓝色屋顶、柔和阴影。像一盘摆在桌上的模型，复杂的厂区也不乱。</span></div>
+    <div class="term"><b>展示协调</b><span>设备按看得清来定大小，不按真实比例。小水泵放大，机柜加高，主角一眼就能找到。</span></div>
+    <div class="term"><b>画面代替口号</b><span>不说“安全”，拍“消防车没有来过”；不说“收益”，拍城市里一栋栋亮起的灯。</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>如果你是一家工业公司</h2>
+  <p class="sub">同样的方法，可以用在你自己的产品和现场上。</p>
+  <div class="offer">
+    <div class="three">
+      <div><b>官网首屏</b><span>一段会动的三维沙盘，打开网页就讲清楚你的产品在现场怎么工作。</span></div>
+      <div><b>展会和展厅大屏</b><span>同一个场景放大到大屏，可以点开设备、看工艺、跑演示。</span></div>
+      <div><b>宣传短片</b><span>从同一个场景录出 2–3 分钟的成片，横屏、竖屏都能出。</span></div>
+    </div>
+    <div class="contact">一次制作，三处都能用。合作请在 <b>小红书 / 视频号</b> 搜索 <b>ZUTAI LAB</b> 私信。</div>
+  </div>
+</section>
+
+<footer>ZUTAI LAB · 组态工坊。作品中的站点、园区和城市均为虚构，画面中的数据为演示数据。</footer>
+</div>
+
+<script>
+// 只播放屏幕里看得见的循环片段；减少动态效果时只显示封面
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids = [].slice.call(document.querySelectorAll('video[data-src]'));
+  if (reduce) return;
+  function load(v) { if (!v.src) { v.src = v.dataset.src; } }
+  if (!('IntersectionObserver' in window)) { vids.forEach(function (v) { load(v); v.play().catch(function () {}); }); return; }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) { load(v); var p = v.play(); if (p) p.catch(function () {}); }
+      else v.pause();
+    });
+  }, { rootMargin: '120px 0px', threshold: 0.15 });
+  vids.forEach(function (v) { io.observe(v); });
+})();
+</script>
+
+</body>
+</html>
